@@ -3,15 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".activities.MainActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Датчики"
+        android:text="@string/sensors"
         android:id="@+id/tvSensors"
-        android:layout_gravity="left|top" />
+        android:layout_gravity="start|top" />
 
     <ListView
         android:layout_width="wrap_content"
@@ -26,18 +26,18 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Сохранить"
+        android:text="@string/save"
         android:id="@+id/btnSave"
-        android:layout_gravity="left|bottom"
+        android:layout_gravity="start|bottom"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Поиск"
+        android:text="@string/search"
         android:id="@+id/btnSearch"
-        android:layout_gravity="right|bottom"
+        android:layout_gravity="end|bottom"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true" />
 

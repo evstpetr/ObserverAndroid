@@ -1,8 +1,6 @@
-package ru.pes.observer;
+package ru.pes.observer.activities;
 
-import android.app.Activity;
 import android.app.ActivityManager;
-import android.app.Notification;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
@@ -11,7 +9,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -21,10 +18,8 @@ import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.commons.codec.DecoderException;
@@ -36,15 +31,13 @@ import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.TimeZone;
 
+import ru.pes.observer.R;
 import ru.pes.observer.fragments.MainFragment;
 import ru.pes.observer.fragments.SearchFragment;
 import ru.pes.observer.objects.Sensor;
 import ru.pes.observer.service.MainService;
-import ru.pes.observer.tasks.BleTask;
 import ru.pes.observer.tasks.DbTask;
-import ru.pes.observer.tasks.SocketTask;
 import ru.pes.observer.utils.Decoder;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -56,6 +49,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Intent intent = getIntent();
+        if (intent != null) {
+            if (intent.getStringExtra("name") == null && intent.getStringExtra("pass") == null) {
+                startActivity(new Intent(this, LoginActivity.class));
+                finish();
+            }
+        }
         ViewPager pager = (ViewPager) findViewById(R.id.pager);
         pager.setAdapter(new CustomAdapter(getSupportFragmentManager()));
         pager.setCurrentItem(1);
@@ -226,10 +226,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     // Расшифровка
                     System.arraycopy(all, 0, part, 0, 16);
                     System.arraycopy(Decoder.decrypt(part), 0, all, 0, 16);
-                    /*System.arraycopy(all, 10, part, 0, 16);
-                    System.arraycopy(Decoder.decrypt2(part), 0, all, 10, 16);
-                    System.arraycopy(all, 6, part, 0, 16);
-                    System.arraycopy(Decoder.decrypt2(part), 0, all, 6, 16);*/
                     // Чтение
                     char[] string;
                     String id = "", count ="";

@@ -1,10 +1,7 @@
 package ru.pes.observer.fragments;
 
 
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,7 +11,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
-import ru.pes.observer.MainActivity;
+import ru.pes.observer.activities.MainActivity;
 import ru.pes.observer.R;
 
 public class SearchFragment extends Fragment {
@@ -24,8 +21,7 @@ public class SearchFragment extends Fragment {
     private ProgressBar bar;
 
     public static SearchFragment newInstance() {
-        SearchFragment fragment = new SearchFragment();
-        return fragment;
+        return new SearchFragment();
     }
 
     @Nullable

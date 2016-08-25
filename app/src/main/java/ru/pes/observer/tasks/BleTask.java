@@ -7,7 +7,6 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.util.Log;
-import android.widget.TextView;
 
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
@@ -20,13 +19,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 
-import ru.pes.observer.db.SensorIdsDataSource;
+import ru.pes.observer.db.ObserverDataSource;
 import ru.pes.observer.objects.Sensor;
 import ru.pes.observer.utils.Decoder;
 
-/**
- * Created by Admin on 07.06.2016.
- */
+
 public class BleTask extends AsyncTask<Object, Void, String> {
     private BluetoothAdapter mBluetoothAdapter;
     private GregorianCalendar calendar;
@@ -132,7 +129,7 @@ public class BleTask extends AsyncTask<Object, Void, String> {
                 Log.e("DECODE ERROR", "Can't decode...");
             }
         }
-        SensorIdsDataSource source = new SensorIdsDataSource(context);
+        ObserverDataSource source = new ObserverDataSource(context);
         source.open();
         List<String> ids = source.getAllSensorIds();
         source.close();

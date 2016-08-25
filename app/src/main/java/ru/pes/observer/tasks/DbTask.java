@@ -7,15 +7,15 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import ru.pes.observer.db.SensorIdsDataSource;
+import ru.pes.observer.db.ObserverDataSource;
 
 public class DbTask extends AsyncTask<Object, Void, Object> {
 
-    SensorIdsDataSource source;
+    ObserverDataSource source;
 
     @Override
     protected Object doInBackground(Object... params) {
-        source = new SensorIdsDataSource((Context) params[0]);
+        source = new ObserverDataSource((Context) params[0]);
         source.open();
 
         List<String> ids = (List<String>) params[1];
