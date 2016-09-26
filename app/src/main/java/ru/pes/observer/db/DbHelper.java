@@ -35,7 +35,7 @@ public class DbHelper extends SQLiteOpenHelper {
             + U_COLUMN_STATE + " TEXT);";
     private String CREATE_TABLE_PHONES = "CREATE TABLE "
             + TABLE_PHONES + " (" + P_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + P_COLUMN_USER_ID + " (" + " INTEGER, "
+            + P_COLUMN_USER_ID + " INTEGER, "
             + P_COLUMN_NUMBER + " INTEGER);";
 
     public DbHelper(Context context) {

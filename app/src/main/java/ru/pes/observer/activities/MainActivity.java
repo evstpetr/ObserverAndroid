@@ -6,6 +6,7 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,6 +17,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.SparseBooleanArray;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -43,19 +46,24 @@ import ru.pes.observer.utils.Decoder;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private final String RUNNING = "SERVICE_ALREADY_RUNNING";
+    private SharedPreferences preferences;
     private ProgressBar bar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Intent intent = getIntent();
-        if (intent != null) {
-            if (intent.getStringExtra("name") == null && intent.getStringExtra("pass") == null) {
-                startActivity(new Intent(this, LoginActivity.class));
-                finish();
-            }
-        }
+        preferences = getSharedPreferences(getString(R.string.app_preferences), MODE_PRIVATE);
+        System.out.println(preferences.getAll());
+        if (!preferences.contains(getString(R.string.login_key))) {
+            startActivity(new Intent(this, StartActivity.class));
+            finish();
+        }/* else {
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putString(getString(R.string.login_key), intent.getStringExtra("name"));
+            editor.commit();
+        }*/
+        System.out.println(preferences.getString(getString(R.string.login_key), "None"));
         ViewPager pager = (ViewPager) findViewById(R.id.pager);
         pager.setAdapter(new CustomAdapter(getSupportFragmentManager()));
         pager.setCurrentItem(1);
@@ -63,6 +71,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private MainActivity getActivity() {
         return this;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    public void onExitClick(MenuItem item) {
+        Intent intent = new Intent(getBaseContext(), StartActivity.class);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.remove(getString(R.string.login_key));
+        editor.commit();
+        startActivity(intent);
+        finish();
     }
 
     @Override

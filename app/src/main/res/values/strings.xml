@@ -5,7 +5,9 @@
     <string name="search">Поиск</string>
     <string name="start">Старт</string>
     <string name="stop">Стоп</string>
+    <string name="exit">Выход</string>
     <string name="title_activity_login">Sign in</string>
+    <string name="extra_message">ru.pes.observer.activities.EXTRA_MESSAGE</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Почта</string>
@@ -17,8 +19,20 @@
     <string name="error_invalid_email">Неправильный адресс почты</string>
     <string name="error_invalid_password">Пароль слишком короткий</string>
     <string name="error_incorrect_password">Неправильный пароль</string>
+    <string name="error_incorrect_password2">Пароли не совпадают</string>
     <string name="error_field_required">Это обязательное поле</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
+
+    <!-- Strings related to start-->
+    <string name="sign_in">войти</string>
+    <string name="or">или</string>
+    <string name="sign_up">зарегистрироваться</string>
+
+    <!-- Preferences -->
+    <string name="app_preferences">ru.pes.observer.activities.PREFERENCES</string>
+    <string name="login_key">ru.pes.observer.activities.LOGIN</string>
+
+    <!-- Network keys -->
+    <string name="sensor">SEN</string>
+    <string name="login">SIN</string> <!-- Sign in -->
+    <string name="register">SUP</string> <!-- Sign up -->
 </resources>
