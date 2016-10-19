@@ -226,6 +226,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onLeScan(BluetoothDevice device, int rssi, byte[] scanRecord) {
                         if (device.getAddress().equals(DEVICE_ADDRESS)) { // Если адресс устройства пригоден читаем данные
+                            System.out.println(device.getName());
                             byte[] msg = new byte[26];
                             System.arraycopy(scanRecord, 5, msg, 0, 26); // массив байт в котором находятся данные
                             data.add(bytesToHex(msg));
