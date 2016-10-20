@@ -16,9 +16,7 @@ import java.util.ArrayList;
 import ru.pes.observer.objects.Message;
 import ru.pes.observer.objects.Sensor;
 
-/**
- * Created by Admin on 07.06.2016.
- */
+
 public class SocketTask extends AsyncTask<Sensor, Void, Void> {
     private Socket client;
     private BufferedReader in;
@@ -50,6 +48,7 @@ public class SocketTask extends AsyncTask<Sensor, Void, Void> {
                     out.println(json);
                 } else {
                     Log.e("CON_ERROR", "Bad connection...");
+                    break;
                 }
             }
         } catch (IOException e) {
