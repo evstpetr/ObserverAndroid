@@ -46,6 +46,8 @@ public class SocketTask extends AsyncTask<Sensor, Void, Void> {
                 if (answer.equalsIgnoreCase("ERR") && answerCount < 7) {
                     answerCount++;
                     out.println(json);
+                } else if (answer.equalsIgnoreCase("OK")) {
+                    break;
                 } else {
                     Log.e("CON_ERROR", "Bad connection...");
                     break;

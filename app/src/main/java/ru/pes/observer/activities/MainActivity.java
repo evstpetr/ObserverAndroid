@@ -133,6 +133,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // The actual number returned may be smaller, depending on how many services are running.
         for (int i = 0; i < rs.size(); i++) {
             ActivityManager.RunningServiceInfo rsi = rs.get(i);
+            System.out.println(rsi.service.getClassName() + " " + serviceClass.getName());
             if (rsi.service.getClassName().equals(serviceClass.getName())) {
                 return true;
             }

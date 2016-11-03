@@ -14,7 +14,7 @@ import ru.pes.observer.tasks.BleTask;
  */
 public class Alarm extends BroadcastReceiver {
 
-    private static final int SCAN_PERIOD = 30000; //miliseconds
+    private static final int SCAN_PERIOD = 3000; //miliseconds
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -30,7 +30,7 @@ public class Alarm extends BroadcastReceiver {
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, Alarm.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
-        am.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SCAN_PERIOD, SCAN_PERIOD, pendingIntent);
+        am.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 0, SCAN_PERIOD, pendingIntent);
     }
 
     public void CancelAlarn(Context context) {
