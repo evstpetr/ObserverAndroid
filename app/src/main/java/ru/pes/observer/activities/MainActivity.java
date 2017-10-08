@@ -7,6 +7,7 @@ import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.Menu;
@@ -43,6 +45,8 @@ import ru.pes.observer.service.MainService;
 import ru.pes.observer.tasks.DbTask;
 import ru.pes.observer.utils.Decoder;
 
+import static android.support.v4.app.ActivityCompat.startActivity;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private final String RUNNING = "SERVICE_ALREADY_RUNNING";
@@ -53,17 +57,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        preferences = getSharedPreferences(getString(R.string.app_preferences), MODE_PRIVATE);
-        System.out.println(preferences.getAll());
-        if (!preferences.contains(getString(R.string.login_key))) {
-            startActivity(new Intent(this, StartActivity.class));
-            finish();
-        }/* else {
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putString(getString(R.string.login_key), intent.getStringExtra("name"));
-            editor.commit();
-        }*/
-        System.out.println(preferences.getString(getString(R.string.login_key), "None"));
         ViewPager pager = (ViewPager) findViewById(R.id.pager);
         pager.setAdapter(new CustomAdapter(getSupportFragmentManager()));
         pager.setCurrentItem(1);
@@ -80,11 +73,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void onExitClick(MenuItem item) {
-        Intent intent = new Intent(getBaseContext(), StartActivity.class);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.remove(getString(R.string.login_key));
-        editor.commit();
-        startActivity(intent);
         finish();
     }
 

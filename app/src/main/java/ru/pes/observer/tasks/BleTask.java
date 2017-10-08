@@ -1,12 +1,22 @@
 package ru.pes.observer.tasks;
 
+import android.app.Activity;
+import android.app.PendingIntent;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.telephony.SmsManager;
+import android.telephony.SmsMessage;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -24,6 +34,8 @@ import java.util.TimeZone;
 import ru.pes.observer.db.ObserverDataSource;
 import ru.pes.observer.objects.Sensor;
 import ru.pes.observer.utils.Decoder;
+
+import static android.support.v4.app.ActivityCompat.startActivity;
 
 
 public class BleTask extends AsyncTask<Object, Void, String> {
@@ -95,6 +107,11 @@ public class BleTask extends AsyncTask<Object, Void, String> {
     private void sendResults(Context context) {
         mBluetoothAdapter.stopLeScan(mLeScanCallback);
         mBluetoothAdapter.disable();
+        SharedPreferences preferences = context.getSharedPreferences("START_COUNT", Context.MODE_PRIVATE);
+        int count = preferences.getInt("count", -1);
+        count = count == -1 ? 0 : ++count;
+        preferences.edit().putInt("count", count).commit();
+        System.out.println(count);
         data = getFilteredData(data, context);
         address = mBluetoothAdapter.getAddress();
         sensor.setAddress(address);
@@ -102,9 +119,13 @@ public class BleTask extends AsyncTask<Object, Void, String> {
         calendar = new GregorianCalendar(TimeZone.getDefault());
         sensor.setDate(sdf.format(calendar.getTime()));
         sensor.setHash(sensor.getAddress().hashCode() + sensor.getData().hashCode() + sensor.getDate().hashCode());
-        if (data.size() > 0) {
-            SocketTask task = new SocketTask();
-            task.execute(sensor);
+        //Переделать на логику отправки сообщений
+        if (count >= 0) {
+            preferences.edit().putInt("count", 0).commit();
+            SmsManager sms = SmsManager.getDefault();
+            String phoneNumber = "";
+            String message = "";
+            sms.sendTextMessage(phoneNumber, null, message, null, null);
         }
     }
 

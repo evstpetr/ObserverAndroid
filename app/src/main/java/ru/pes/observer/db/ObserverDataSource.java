@@ -13,7 +13,6 @@ public class ObserverDataSource {
     private SQLiteDatabase database;
     private DbHelper dbHelper;
     private String[] sensorsDbColumns = {DbHelper.COLUMN_ID, DbHelper.COLUMN_SENSOR_ID};
-    private String[] usersDbColumns = {DbHelper.U_COLUMN_ID, DbHelper.U_COLUMN_NAME, DbHelper.U_COLUMN_STATE};
     private String[] phonesDbColumns = {DbHelper.P_COLUMN_ID, DbHelper.P_COLUMN_NUMBER, DbHelper.P_COLUMN_USER_ID};
 
     public ObserverDataSource(Context context) {
@@ -33,13 +32,6 @@ public class ObserverDataSource {
         ContentValues values = new ContentValues();
         values.put(DbHelper.COLUMN_SENSOR_ID, sensorId);
         database.insert(DbHelper.TABLE_SENSORS, null, values);
-    }
-
-    public void addUser(String userName, int state) {
-        ContentValues values = new ContentValues();
-        values.put(DbHelper.U_COLUMN_NAME, userName);
-        values.put(DbHelper.U_COLUMN_STATE, state);
-        database.insert(DbHelper.TABLE_USERS, null, values);
     }
 
     public void addPhone(int number, int userId) {
